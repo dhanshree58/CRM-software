@@ -15,22 +15,23 @@ import {
 const app = express();
 
 
-// ======================================================
 // GLOBAL MIDDLEWARE
-// ======================================================
+
 
 app.use(
   cors({
-    origin: "http://localhost:5173"
+    origin: [
+      "http://localhost:5173",
+      "https://crm-software-eight.vercel.app"
+    ],
+    credentials: true
   })
 );
 
 app.use(express.json());
 
 
-// ======================================================
-// HEALTH CHECK
-// ======================================================
+
 
 app.get("/", (req, res) => {
   res.json({
@@ -40,9 +41,7 @@ app.get("/", (req, res) => {
 });
 
 
-// ======================================================
 // API ROUTES
-// ======================================================
 
 app.use("/api/customers", customerRoutes);
 
@@ -55,16 +54,12 @@ app.use("/api/deliveries", deliveryRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 
-// ======================================================
 // 404 HANDLER
-// ======================================================
 
 app.use(notFound);
 
 
-// ======================================================
 // GLOBAL ERROR HANDLER
-// ======================================================
 
 app.use(errorHandler);
 
